@@ -1,6 +1,7 @@
 package com.yanpramudita.websocket.service;
 
 import com.yanpramudita.websocket.dto.MessageDto;
+import com.yanpramudita.websocket.exception.DataNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.LocalDateTime;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,4 +56,23 @@ public class MessageServiceTest {
         MessageDto request = new MessageDto();
         messageService.addNewMessage(request);
     }
+
+    @Test
+    public void getMessageByIdPositiveCase() throws DataNotFoundException {
+        MessageDto request = new MessageDto();
+        request.setMessage("HELLO1");
+
+        messageService.addNewMessage(request);
+
+        MessageDto response = messageService.getMessageById(1L);
+        Assert.assertEquals(request.getMessage(), response.getMessage());
+        Assert.assertEquals(new Long(1), response.getId());
+        Assert.assertNotNull(response.getCreatedAt());
+    }
+
+    @Test(expected = DataNotFoundException.class)
+    public void getMessageByIdNotFound() throws DataNotFoundException {
+        messageService.getMessageById(1L);
+    }
+
 }

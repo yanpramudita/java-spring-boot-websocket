@@ -37,3 +37,15 @@ $ java -jar target/websocket-0.0.1-SNAPSHOT.jar
 ```
 
 
+### Get message:
+* URL: ```GET http://localhost:8080/api/v1/message/{id}```
+* Response:
+```$xslt
+{
+    "id": 1,
+    "message": "Hello",
+    "createdAt": "2020-03-05 22:48:47.486"
+}
+```
+
+
