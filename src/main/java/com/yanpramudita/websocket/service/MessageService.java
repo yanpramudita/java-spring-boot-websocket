@@ -7,6 +7,7 @@ import com.yanpramudita.websocket.repository.MessageRepository;
 import com.yanpramudita.websocket.utils.ModelConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.Optional;
  */
 @Service
 public class MessageService {
+    @Autowired
+    private MessageSendingOperations<String> messagingTemplate;
 
     @Autowired
     private MessageRepository messageRepository;
@@ -35,7 +38,11 @@ public class MessageService {
 
         Message message = messageRepository.save(messageSpec);
 
-        return ModelConverter.toMessageDto(message);
+        MessageDto messageDto = ModelConverter.toMessageDto(message);
+
+        // send to websocket subscribers
+        messagingTemplate.convertAndSend("/topic/messages", messageDto);
+        return messageDto;
     }
 
     /**

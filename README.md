@@ -17,6 +17,7 @@ $ java -jar target/websocket-0.0.1-SNAPSHOT.jar
 
 ## your app will run on port 8080
 ```
+* Now you can access this app using your browser on: http://localhost:8080
 ## API
 ### Add new message:
 * URL: ```POST http://localhost:8080/api/v1/message/add```
@@ -65,5 +66,22 @@ $ java -jar target/websocket-0.0.1-SNAPSHOT.jar
     }
 ]
 ```
+
+## Websocket
+* URL: ```localhost:8080/websocket```
+
+### Get new message:
+* Subscribtion topic ```/topic/message``` 
+* Payload:
+```aidl
+{
+    "id": 1,
+    "message": "Hello",
+    "createdAt": "2020-03-05 22:48:47.486"
+}
+```
+
+## References
+* [Using WebSocket to build an interactive web application](https://spring.io/guides/gs/messaging-stomp-websocket/)
 
 
