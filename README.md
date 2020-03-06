@@ -18,6 +18,10 @@ $ java -jar target/websocket-0.0.1-SNAPSHOT.jar
 ## your app will run on port 8080
 ```
 * Now you can access this app using your browser on: http://localhost:8080
+
+## Disclaimer
+* The data is stored in memory and will be cleared up every time the app is shut down or restarted.
+
 ## API
 ### Add new message:
 * URL: ```POST http://localhost:8080/api/v1/message/add```
@@ -84,4 +88,5 @@ $ java -jar target/websocket-0.0.1-SNAPSHOT.jar
 ## References
 * [Using WebSocket to build an interactive web application](https://spring.io/guides/gs/messaging-stomp-websocket/)
 
-
+## License
+* MIT
