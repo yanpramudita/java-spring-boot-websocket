@@ -11,6 +11,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
@@ -70,7 +72,42 @@ public class MessageServiceTest {
         Assert.assertNotNull(response.getCreatedAt());
     }
 
-    @Test(expected = DataNotFoundException.class)
+    @Test
+    public void listMessageTestNoData() throws DataNotFoundException {
+        List<MessageDto> response = messageService.listMessages();
+
+        Assert.assertEquals(0, response.size());
+    }
+
+    @Test
+    public void listMessagesPositiveCase() {
+        MessageDto request = new MessageDto();
+        request.setMessage("HELLO1");
+
+        messageService.addNewMessage(request);
+
+        MessageDto request2 = new MessageDto();
+        request2.setMessage("HELLO2");
+        request2.setId(1L);
+        messageService.addNewMessage(request2);
+
+        List<MessageDto> response = messageService.listMessages();
+        Assert.assertEquals(2, response.size());
+
+        MessageDto response1 = response.get(0);
+        MessageDto response2 = response.get(1);
+
+        Assert.assertEquals(request.getMessage(), response1.getMessage());
+        Assert.assertEquals(new Long(1), response1.getId());
+        Assert.assertNotNull(response1.getCreatedAt());
+
+        Assert.assertEquals(request2.getMessage(), response2.getMessage());
+        Assert.assertEquals(new Long(2), response2.getId());
+        Assert.assertNotNull(response2.getCreatedAt());
+    }
+
+
+        @Test(expected = DataNotFoundException.class)
     public void getMessageByIdNotFound() throws DataNotFoundException {
         messageService.getMessageById(1L);
     }

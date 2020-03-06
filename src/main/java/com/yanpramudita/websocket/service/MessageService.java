@@ -6,8 +6,10 @@ import com.yanpramudita.websocket.model.Message;
 import com.yanpramudita.websocket.repository.MessageRepository;
 import com.yanpramudita.websocket.utils.ModelConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -50,5 +52,11 @@ public class MessageService {
         }
 
         return ModelConverter.toMessageDto(message.get());
+    }
+
+    public List<MessageDto> listMessages() {
+        List<Message> messages =  messageRepository.findAll(Sort.by("createdAt"));
+
+        return ModelConverter.toMessageDto(messages);
     }
 }

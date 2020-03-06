@@ -48,4 +48,22 @@ $ java -jar target/websocket-0.0.1-SNAPSHOT.jar
 }
 ```
 
+### List messages:
+* URL: ```GET http://localhost:8080/api/v1/message/list```
+* Response:
+```$xslt
+[
+    {
+        "id": 1,
+        "message": "sd",
+        "createdAt": "2020-03-06 18:18:20.243"
+    },
+    {
+        "id": 2,
+        "message": "sd",
+        "createdAt": "2020-03-06 18:18:24.717"
+    }
+]
+```
+
 
